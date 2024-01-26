@@ -1,0 +1,77 @@
+{%extends 'base.html'%}
+{%block body_block%}
+                
+<div class="container mb-5">
+    <div class="row d-flex justify-content-evenly ">
+        <div class="col-7 border" style="height: 590px;">
+            <img src="{{data.picture.url}}" alt="" class="object-fit-scale" style="width: 99.9%; height: 60%;">
+            <form action="{%url 'add-fav' data.id%}" method="post" class="d-flex">
+                {%csrf_token%}
+                  {%if data in wishlist.scrap.all%}
+                    <div class="d-block flex-column" style="margin-left:90%;margin-top:-45%">
+                        <div>
+                            <button type="submit" name="action" value="remove" class="btn"><i class="fa-solid fa-heart fa-md fs-5 text-danger bg-light rounded-circle p-2 btn"></i></button>
+                        </div>
+                    </div>
+                  {%else%}
+                    <div class="d-block flex-column" style="margin-left:90%;margin-top:-45%;">
+                        <div class="">
+                            <button type="submit" name="action" value="add" class="btn "><i class="fa-regular fa-heart fa-md fs-5 text-dark bg-light rounded-circle p-2 btn"></i></button>
+                        </div>
+                    </div>
+                  {%endif%}
+            </form>
+            <p><hr></p>
+            <h4 class="fw-bold mb-3">Details</h4>
+            <p>Category: <strong>{{data.category}}</strong></p>
+            <p>Condition: <strong>{{data.condition}}</strong></p>
+            <p>Description: <strong>{{data.description}}</strong></p>
+        </div>
+        <div class="col-4" style="height: 360px;">
+            <div class="border p-3">
+                <h1 class="fw-bold">₹ {{data.price}}</h1>
+            <h3>{{data.name}}</h3>
+            <hr class="mt-4">
+            <div class="">
+                <h4 class="fw-bold">Posted in</h4>
+                {{data.location}}
+            </div>
+            <hr class="mt-4">
+            <div class="">
+                <h4 class="fw-bold">Posted by</h4>
+                <p class="fs-5"><i class="fa-solid fa-circle-user" style="color: #004040;"></i>
+                    {%if data.user != request.user%}
+                        <a href="{%url 'profile-detail' data.user.id%}" class=" ms-1 link-underline link-underline-opacity-0 text-dark">{{data.user}}</a>
+                    {%else%}
+                        {{data.user}}
+                    {%endif%}
+                    </p>
+
+                <p class=""><i class="fa-solid fa-phone fa-lg" style="color: #004040;"></i> {{data.user.profile.contact}}</p>
+            </div>
+            </div>
+            {%if data.status == "Mark as Sold"%}
+                <div class="border mt-5 p-3 text-center">
+                    <strong class="fs-1" style="color: rgb(212, 137, 24);">SOLD</strong>
+                </div>
+            {%else%}
+                {%if request.user != data.user%}
+                    <div class="border mt-5 p-3">
+                        <form action="" method="post" class="d-flex">
+                            {%csrf_token%}
+                            <div class="">
+                                <label for="">Send an offer:</label>
+                                {{bid.amount}}
+                                <input type="text" class="form-control" value="{{bid.amount}}" name="amount" id="">
+                            </div>
+                            <button type="submit" class="btn btn-outline-dark ms-2 mt-4 h-50"><i class="fa-solid fa-hand-holding-dollar"></i></button>
+                        </form>
+                    </div>
+                {%endif%}
+            {%endif%}
+        </div>
+    </div>
+
+</div>
+
+{%endblock%}

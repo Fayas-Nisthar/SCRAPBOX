@@ -1,0 +1,47 @@
+{%extends 'base.html'%}
+{%block body_block%}    
+
+
+<div class="container">
+  <div class="d-flex mb-3">
+    <h4 class="ms-3"><a href="{%url 'my-ads'%}" class="text-secondary link-underline link-underline-opacity-0">ADS</a></h4>
+    <h4 class="ms-3"><a href="{%url 'fav'%}" class="text-dark link-underline link-underline-opacity-0">FAVOURITES</a></h4>
+  </div>    
+    <div class="row">
+      {%for d in data.scrap.all%}
+      <div class="col-3 mt-3">
+        <div class="card " style="width: 18rem;">
+            <a href="{%url 'product-details' d.id%}" class="link-underline link-underline-opacity-0">
+              <img src= "{{d.picture.url}}" class="card-img-top p-2" alt="..." style="height: 180px;">
+              <form action="{%url 'add-fav' d.id%}" method="post" class="d-flex">
+                {%csrf_token%}
+                  {%if d in ads.all%}
+                  <div class="d-block flex-column" style="margin-left:78%;margin-top:-60%;">
+                      <div>
+                          <button type="submit" name="action" value="remove" class="btn"><i class="fa-solid fa-heart fa-md fs-5 text-danger bg-light rounded-circle p-2 btn"></i></button>
+                      </div>
+                  </div>
+                  {%else%}
+                    <div class="d-block flex-column" style="margin-left:78%;margin-top:-60%;">
+                        <div class="">
+                            <button type="submit" name="action" value="add" class="btn "><i class="fa-regular fa-heart fa-md fs-5 text-dark bg-light rounded-circle p-2 btn"></i></button>
+                        </div>
+                    </div>
+                  {%endif%}
+              </form>
+              <div class="card-body">
+                <h5 class="card-title fw-bold text-dark">₹{{d.price}}/-</h5>
+                <div class="card-text text-dark">{{d.name}}</div>
+                <small class="text-body-secondary">{{d.location}}</small>
+                <small class="text-body-secondary position-absolute end-0 pe-2">{{d.created_date|date:"F d"}}</small>
+              </div>
+            </a>
+        </div>
+      </div>
+    
+      {%endfor%}
+    </div>
+
+</div>
+
+{%endblock%}

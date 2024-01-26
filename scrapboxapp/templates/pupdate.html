@@ -1,0 +1,25 @@
+{%extends 'base.html'%}
+{%block body_block%}
+
+<div class="container">
+    <h3 class="text-center fw-bolder">UPDATE YOUR AD</h3>
+    <!-- ======== card starts ========== -->
+    <div class="container border w-50 p-4 mb-5">
+        <form action="" method="post" enctype="multipart/form-data">
+            {%csrf_token%}
+            {%for fields in form%}
+            <p>
+                {{fields.label_tag}}
+                {{fields}}
+            {%endfor%}
+            </p>
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-secondary">Update</button>
+            </div>  
+        </form>
+    </div>
+    <!-- ======= card ends ======= -->
+</div>
+
+
+{%endblock%}

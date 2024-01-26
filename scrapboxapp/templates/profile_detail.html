@@ -1,0 +1,55 @@
+{%extends 'base.html'%}
+{%block body_block%}    
+
+<div class="container mb-5">
+    <div class="row">
+        <div class="col-3 me-2">
+            <div class="text-center">
+                <img class="profile-pic shadow" src="{{user.pic.url}}" alt="Avatar" style="border-radius: 50%;
+                        background-color: rgb(13, 13, 13);">
+                <p class="mt-3">{{user.first_name}} {{user.last_name}}</p>
+                <p>Phone: {{user.contact}}</p>
+            </div>
+        </div>
+        <div class="col-8">
+            <div class="row">
+                {%for d in data%}
+                    <div class="col-4 mt-3">
+                      <div class="card " style="width: 18rem;">
+                          <a href="{%url 'product-details' d.id%}" class="link-underline link-underline-opacity-0">
+                            <img src= "{{d.picture.url}}" class="card-img-top object-fit-cover p-2" alt="..." style="height: 180px;">
+                            <form action="{%url 'add-fav' d.id%}" method="post" class="d-flex">
+                              {%csrf_token%}
+                                {%if d in wishlist.scrap.all%}
+                                  <div class="d-block flex-column" style="margin-left:78%;margin-top:-60%;">
+                                      <div>
+                                          <button type="submit" name="action" value="remove" class="btn"><i class="fa-solid fa-heart fa-md fs-5 text-danger bg-light rounded-circle p-2 btn"></i></button>
+                                      </div>
+                                  </div>
+                                {%else%}
+                                  <div class="d-block flex-column" style="margin-left:78%;margin-top:-60%;">
+                                      <div class="">
+                                          <button type="submit" name="action" value="add" class="btn "><i class="fa-regular fa-heart fa-md fs-5 text-dark bg-light rounded-circle p-2 btn"></i></button>
+                                      </div>
+                                  </div>
+                                {%endif%}
+                            </form>
+                            <div class="card-body">
+                              <h5 class="card-title fw-bold text-dark">₹{{d.price}}/-</h5>
+                              <div class="card-text text-dark">{{d.name}}</div>
+                              <small class="text-body-secondary">{{d.location}}</small>
+                              <small class="text-body-secondary position-absolute end-0 pe-2" >{{d.created_date|date:"F d"}}</small>
+                            </div>
+                          </a>
+                      </div>
+                    </div>
+                {%endfor%}
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+
+{%endblock%}

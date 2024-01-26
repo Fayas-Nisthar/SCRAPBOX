@@ -1,0 +1,37 @@
+{%extends 'base.html'%}
+{%block body_block%}    
+
+
+<div class="container">
+  <div class="d-flex mb-3"> 
+    <h4 class="ms-3"><a href="{%url 'my-ads'%}" class="text-dark link-underline link-underline-opacity-0">ADS</a></h4>
+    <h4 class="ms-3"><a href="{%url 'fav'%}" class="text-secondary link-underline link-underline-opacity-0">FAVOURITES</a></h4>
+  </div>    
+    <div class="row">
+    {%for d in data%}
+        <div class="col-6">
+          <div class="card mb-4" style="height: 148px; width: 500px;">
+            <a href="{%url 'product-details' d.id%}" class="link-underline text-dark link-underline-opacity-0">
+             <div class="row g-0 d-flex">
+              <div class="col-md-4 p-2">
+              <img src="{{d.picture.url}}" class="img-fluid object-fit-cover rounded-start" alt="..." style="height:130px; width: 100%;"></a>
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title">{{d.name}}</h5>
+                  <p class="card-text">₹ {{d.price}}</p>
+                  <div class="d-flex justify-content-end">
+                    <a href="{%url 'prdct-update' d.id%}"><button class="btn btn-outline-dark me-2">Edit</button></a>
+                    <a href="{%url 'prdct-delete' d.id%}"><button class="btn btn-outline-danger me-2">Delete</button></a>
+                    <a href="{%url 'bid-list' d.id%}"><button class="btn btn-outline-success"><i class="fa-solid fa-handshake"></i></button></a>
+                  </div>
+                </div>
+              </div>
+             </div>
+          </div>
+        </div>
+    {%endfor%}
+    </div>
+</div>
+
+{%endblock%}

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+{%load static%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{%static 'css/style.css'%}">
+    <title>Scrapbox</title>
+</head>
+<body>
+    <!-- ===========nav starts =========== -->
+
+    <nav class="navbar mb-4 navbar-expand-lg" style="background-color: #080808;">
+        <div class="container">
+          <a class="navbar-brand" href="{%url 'home'%}">
+            <img src="{%static 'images/scrapboxlogo.png'%}" alt="Logo" width="82" height="30" class="d-inline-block align-text-top">
+          </a>     
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link active text-light" aria-current="page" href="{%url 'home'%}">Home</a>
+              </li>
+              <li class="nav-item mt-2 me-3" style="margin-left: 900px">
+                <a href=""data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  <i class="fa-solid fa-bell fa-xl"></i>
+                  <span class="pro-absolute translate-middle badge rounded-circle bg-dark">{{count}}</span>
+
+                </a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-solid fa-circle-user fa-xl" style="color: #e9ecec;"></i>
+                </a>
+                <ul class="dropdown-menu ">
+                  <li><a class="dropdown-item mt-2 mb-2" href="{%url 'profile-update' request.user.profile.id%}"><i class="fa-solid fa-circle-user fa-2xl" style="color: #004040;"></i> 
+                     {{request.user}}
+                    <div class="mt-3">
+                      <button class="btn btn-dark">Edit & Update Profile</button>
+                    </div>
+                  </a></li>
+                  <li><a class="dropdown-item" href="{%url 'my-ads'%}"> <i class="fa-solid fa-heart fa-xl me-2" style="color: #004040;"></i> My ADS</a></li>
+                  <li><a class="dropdown-item" href="{%url 'signout'%}"> <i class="fa-solid fa-right-from-bracket fa-xl  me-2 fa-rotate-180" style="color: #004040;"></i> Logout</a></li>
+                </ul>
+              </li>
+              <li class="nav-item ms-3" >
+               <a href="{%url 'productadd'%}"><button type="button" class="btn border border-warning border-3 rounded-pill fw-bold text-warning shadow" style="width: 100px;"><i class="fa-solid fa-plus"></i> SELL</button></a> 
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <!-- ===========nav ends =========== -->
+
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Bids Notifications</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              {%for bids in bid_status%}
+                {%if bids.status == "Accept"%}                
+                  <div class="p-2" style="background-color: rgb(82, 221, 161);">
+                    <a href="{%url 'product-details' bids.scrap.id%}" class="text-dark link-underline link-underline-opacity-0">Bid for <strong>{{bids.scrap}}</strong> accepted by seller: <strong>{{bids.scrap.user}}</strong></a>
+                  </div>
+                {%elif bids.status == "Reject"%}
+                  <div class="p-2" style="background-color: rgb(219, 117, 117);">
+                    <a href="{%url 'product-details' bids.scrap.id%}" class="text-dark link-underline link-underline-opacity-0">Rejected the offer of <strong>₹{{bids.amount}}</strong> for <strong>{{bids.scrap}}</strong> by owner
+                    </a>
+                  </div>
+                {%endif%}
+              {%endfor%}
+            </div>      
+          </div>
+        </div>
+      </div>   
+
+      <div class="ms-auto w-50">
+        {%if messages%}
+          {%for m in messages%}
+              {%if m.level == DEFAULT_MESSAGE_LEVELS.SUCCESS%}
+                  <div class="d-flex justify-content-center">
+                      <div class="alert alert-success alert-dismissible fade show" role="alert">
+                          <strong>{{m}}</strong>
+                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                       </div>
+                    </div>
+              {%endif%}
+              {%if m.level == DEFAULT_MESSAGE_LEVELS.ERROR%}
+                  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                      <strong>{{m}}</strong>
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                   </div>
+              {%endif%}
+            {%endfor%}
+        {%endif%}
+      </div>
+
+{%block body_block%}
+{%endblock%}
+
+</body>
+</html>
