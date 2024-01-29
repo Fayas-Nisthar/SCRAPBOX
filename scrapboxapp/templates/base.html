@@ -16,18 +16,31 @@
     <nav class="navbar mb-4 navbar-expand-lg" style="background-color: #080808;">
         <div class="container">
           <a class="navbar-brand" href="{%url 'home'%}">
-            <img src="{%static 'images/scrapboxlogo.png'%}" alt="Logo" width="82" height="30" class="d-inline-block align-text-top">
+            <img src="{%static 'images/scrapboxlogo.png'%}" alt="Logo" width="82" height="30">
           </a>     
-          <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav">
+          <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mt-1">
               <li class="nav-item">
                 <a class="nav-link active text-light" aria-current="page" href="{%url 'home'%}">Home</a>
               </li>
-              <li class="nav-item mt-2 me-3" style="margin-left: 900px">
+
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    All Categories
+                </a>
+                <ul class="dropdown-menu ">
+                  <li><a class="dropdown-item" href="{%url 'home'%}?category=1">Mobiles</a></li>
+                  <li><a class="dropdown-item" href="{%url 'home'%}?category=2">Electronics & Appliances</a></li>
+                  <li><a class="dropdown-item" href="{%url 'home'%}?category=3">Cars</a></li>
+                  <li><a class="dropdown-item" href="{%url 'home'%}?category=6">Bikes</a></li>
+                  <li><a class="dropdown-item" href="{%url 'home'%}?category=4">Furniture</a></li>
+                </ul>
+              </li>
+
+              <li class="nav-item mt-2 me-3" style="margin-left: 800px">
                 <a href=""data-bs-toggle="modal" data-bs-target="#exampleModal">
                   <i class="fa-solid fa-bell fa-xl"></i>
-                  <span class="pro-absolute translate-middle badge rounded-circle bg-dark">{{count}}</span>
-
+                  <span class="position-absolute translate-middle badge rounded-circle bg-dark">{{count}}</span>
                 </a>
               </li>
               <li class="nav-item dropdown">
@@ -103,6 +116,69 @@
 
 {%block body_block%}
 {%endblock%}
+
+<!-- Footer -->
+<footer class="text-center text-lg-start bg-body-tertiary text-muted">
+  <!-- Section: Links  -->
+  <section class="p-1">
+    <div class="container text-center text-md-start mt-5">
+      <!-- Grid row -->
+      <div class="row mt-3">
+        <!-- Grid column -->
+        <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+          <!-- Content -->
+          <h6 class="text-uppercase fw-bold mb-4">
+            <i class="fas fa-gem me-3"></i>SCRAPBOX
+          </h6>
+          <p>
+            Discover the easiest way to buy and sell second-hand goods locally with SCRAPBOX.
+             Whether you're looking for a great deal on pre-loved items or hoping to declutter your space, 
+             SCRAPBOX connects buyers and sellers in your local community. 
+          </p>
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold mb-4">
+            CATEGORY
+          </h6>
+          <p>
+            <a href="{%url 'home'%}?category=1" class="text-reset">Mobiles</a>
+          </p>
+          <p>
+            <a href="{%url 'home'%}?category=3" class="text-reset">Cars</a>
+          </p>
+          <p>
+            <a href="{%url 'home'%}?category=6" class="text-reset">Bikes</a>
+          </p>
+          <p>
+            <a href="{%url 'home'%}?category=2" class="text-reset">Electronics & Appliances</a>
+          </p>
+        </div>
+        <!-- Grid column -->
+
+
+        <!-- Grid column -->
+        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
+          <p><i class="fas fa-home me-3"></i> Luminar Technolab</p>
+          <p>
+            <i class="fas fa-envelope me-3"></i>
+            info@example.com
+          </p>
+          <p><i class="fas fa-phone me-3"></i> +91 8113968122</p>
+        </div>
+        <!-- Grid column -->
+      </div>
+      <!-- Grid row -->
+    </div>
+  </section>
+  <!-- Section: Links  -->
+</footer>
+<!-- Footer -->
 
 </body>
 </html>

@@ -70,12 +70,16 @@ class ProductAddView(View):
             messages.success(request,"Ads posting failed")
             return render(request,"add.html",{"form":form})
         
+        
 class ProductListView(View):
     def get(self,request,*args,**kwargs):
         qs=ScrapModel.objects.exclude(user=request.user)
         fav_ad=WhislistsModel.objects.get(user=request.user)
         bid=BidsModel.objects.filter(user=request.user)
         count=bid.exclude(status="Pending").count()
+        if "category" in request.GET:
+            category=request.GET.get("category")
+            qs=qs.filter(category__exact=category)
         return render (request,"home.html",{"data":qs,"wishlist":fav_ad,"bid_status":bid,"count":count})
     
 @method_decorator(signin_required,name="dispatch")
