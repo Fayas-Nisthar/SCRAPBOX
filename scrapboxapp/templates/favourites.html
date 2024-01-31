@@ -1,6 +1,6 @@
 {%extends 'base.html'%}
 {%block body_block%}    
-
+{%load static%}
 
 <div class="container mb-5">
   <div class="d-flex mb-3">
@@ -8,6 +8,7 @@
     <h4 class="ms-3"><a href="{%url 'fav'%}" class="text-dark link-underline link-underline-opacity-0">FAVOURITES</a></h4>
   </div>    
     <div class="row">
+      {%if data.scrap.all%}
       {%for d in data.scrap.all%}
       <div class="col-3 mt-3">
         <div class="card " style="width: 18rem;">
@@ -38,8 +39,22 @@
             </a>
         </div>
       </div>
-    
       {%endfor%}
+      {%else%}
+        <div class="w-100 d-flex justify-content-center">
+          <div class="">
+            <img src="{%static 'images/reg2.jpg'%}" alt="">
+            <div class="text-center">
+              <strong>You haven't liked anything yet</strong>
+              <p>Mark the items that you like and share it with the world!</p>
+              <a href="{%url 'home'%}"><button class="btn border border-danger border-3 text-dark fw-bold shadow" style="width: 100px;">Discover</button></a> 
+
+            </div>
+          </div>
+          
+        </div>
+      {%endif%}
+
     </div>
 
 </div>
