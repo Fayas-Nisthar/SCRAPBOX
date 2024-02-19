@@ -5,6 +5,7 @@
     <div class="row d-flex justify-content-evenly ">
         <div class="col-7 border" style="height: 590px;">
             <img src="{{data.picture.url}}" alt="" class="object-fit-scale" style="width: 99.9%; height: 60%;">
+            {%if data.user != request.user%}
             <form action="{%url 'add-fav' data.id%}" method="post" class="d-flex">
                 {%csrf_token%}
                   {%if data in wishlist.scrap.all%}
@@ -21,6 +22,7 @@
                     </div>
                   {%endif%}
             </form>
+            {%endif%}
             <p><hr></p>
             <h4 class="fw-bold mb-3">Details</h4>
             <p>Category: <strong>{{data.category}}</strong></p>
